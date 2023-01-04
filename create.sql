@@ -24,8 +24,9 @@ morada varchar(40));
 
 CREATE TABLE livro(idLivro int PRIMARY KEY AUTO_INCREMENT,
 isbn varchar(20) not null unique,
-nomeLivro varchar(40) not null,
+tituloLivro varchar(40) not null,
 descricao varchar(300),
+numeroPaginas int not null,
 stock int not null,
 idEditora int not null unique,
 FOREIGN KEY(idEditora) REFERENCES editora(idEditora));
