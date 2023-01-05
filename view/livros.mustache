@@ -2,10 +2,35 @@
     <head>
     </head>
     <body>
-        <h1>USERS</h1>
+        <h1>Livros</h1>
         <br><br>
         <a href="inseriruser">Inserir livro</a>   
         <br><br>
         <a href="form-post-aluno">listar livros</a>  
+        <br>
+
+        <table align="center"  width="467" border="1px">
+                <tr>
+                        <td> Id </td>
+                        <td> ISBN </td>
+                        <td> Titulo </td>
+                        <td> Número de Páginas </td>
+                        <td> Stock </td>
+                        <td> Id Editora </td>
+                    </tr>
+
+            {{#livros}}
+                    
+
+                    <tr>
+                        <td>{{id}}</td>
+                        <td>{{isbn}}</td>
+                        <td>{{tituloLivro}}</td>
+                        <td>{{numeroPaginas}}</td>
+                        <td>{{stock}}</td>
+                        <td>{{idEditora}}</td>
+                    </tr>
+            {{/livros}}
+        </table>
     </body>
 </html>

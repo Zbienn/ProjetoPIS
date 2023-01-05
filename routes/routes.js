@@ -2,12 +2,16 @@ var express = require('express');
 var mustacheExpress = require('mustache-express');
 var app = express();
 var router = express.Router();
+
+//Dados Json
 var users = require('../users.json');
+var livros = require('../livros.json');
 
 app.engine('mustache', mustacheExpress());
 app.set('view engine', 'mustache'); //Extensão dos ficheiros das views
 app.set('views', __dirname + '/view'); 
 
+//Rotas
 router.get('/', function(req, res) {
   res.render('home', {
   });
@@ -28,6 +32,12 @@ router.get('/users', function (req, res) {
       users:users
     });
   });
+
+router.get('/livros', function(req, res) {
+  res.render('livros', {
+    livros: livros
+  });
+});
 
   router.get('/inseriruserform', function (req, res) {
     res.render('inseriruserform');
