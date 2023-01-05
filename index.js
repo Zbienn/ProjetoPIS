@@ -9,16 +9,5 @@ app.use(express.urlencoded({extended: true}));
 
 var rotas = require('./routes/routes.js');
 
-var path = require('path');
-
-app.get('/', function(req, res) {
-    res.render('home', {
-        title: 'Hey',
-        message: 'Hello there!'
-        })
-    
-});
-
-
 app.use('/', rotas);
 app.listen(8081);

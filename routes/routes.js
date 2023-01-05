@@ -2,6 +2,10 @@ var express = require('express');
 const data = require('..');
 var router = express.Router();
 
+router.get('/', function(req, res) {
+  res.render('home', {
+  });
+});
 
 router.get('/ola', function (req, res) {
     res.send('ola');
@@ -31,7 +35,7 @@ router.get('/users', function (req, res) {
 
 
 router.get('*', function(req, res){
-    res.redirect('http://localhost:8081/erro.html');
+    //res.redirect('http://localhost:8081/erro.html');
 });
 
 
