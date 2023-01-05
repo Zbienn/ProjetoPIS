@@ -8,5 +8,16 @@
         <br><br>
         <a href="form-post-aluno">listar users</a>  
         <br><br>
+        <table>
+        {{#users}}
+                <tr>
+                    <td>{{id}}</td>
+                    <td>{{user}}</td>
+                    <td>{{password}}</td>
+                    <td>{{admin}}</td>
+                </tr>
+        {{/users}}
+        </table>
+
     </body>
 </html>

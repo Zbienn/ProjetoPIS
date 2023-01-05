@@ -24,7 +24,9 @@ router.get('/erro', function (req, res) {
 });
 
 router.get('/users', function (req, res) {
-    res.render('users');
+    res.render('users', {
+      users:users
+    });
   });
 
   router.get('/inseriruserform', function (req, res) {
