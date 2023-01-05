@@ -43,6 +43,10 @@ router.get('/livros', function(req, res) {
     res.render('inseriruserform');
   });
 
+  router.get('/inserirLivroform', function (req, res) {
+    res.render('inserirLivroform');
+  });
+
   router.post('/inseriruser', function (req, res) {
     const user = {id: 0, user: "", password: "", admin: false};
     user.id = parseInt(req.body.id);
@@ -53,6 +57,21 @@ router.get('/livros', function(req, res) {
     res.redirect('http://localhost:8081');
 
  });
+
+ router.post('/inserirlivro', function (req, res) {
+  const livro = {id: 0, isbn: "", titulo: "", numeroPaginas: 0, stock: 0, idEditora: 0};
+  livro.id = parseInt(req.body.id);
+  livro.isbn = req.body.isbn;
+  livro.titulo = req.body.titulo;
+  livro.tituloLivro = req.body.titulo;
+  livro.numeroPaginas = req.body.numeroPaginas;
+  livro.stock = req.body.stock;
+  livro.idEditora = parseInt(req.body.idEditora);
+  livros.push(livro);
+  console.log(livros);
+  res.render('home', {
+  });
+});
 
 
  router.get('/login', function (req, res) {
