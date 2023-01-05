@@ -8,6 +8,10 @@ app.engine('mustache', mustacheExpress());
 app.set('view engine', 'mustache'); //Extensão dos ficheiros das views
 app.set('views', __dirname + '/view'); 
 
+router.get('/', function(req, res) {
+  res.render('home', {
+  });
+});
 
 router.get('/ola', function (req, res) {
     res.send('ola');
