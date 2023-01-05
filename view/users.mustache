@@ -6,7 +6,8 @@
         <br><br>
         <a href="inseriruserform">Inserir user</a>   
         <br><br>
-        <a href="form-post-aluno">listar users</a>  
+        <label for="idpesquisa">Pesquisa por id:</label><br>
+        <input type="number" id="idpesquisa" name="idpesquisa"><button type="button" onclick="pesquisar()">Pesquisar</button>
         <br><br>
         <table>
         {{#users}}
@@ -21,3 +22,14 @@
 
     </body>
 </html>
+
+<script>
+    function pesquisar() {
+        var id = document.getElementById("idpesquisa").value;
+        if (id==""){
+            alert("Campo de pesquisa tem de ter um valor!");
+        }else{
+             location.replace("http://localhost:8081/pesquisauser")
+        }
+    }
+</script>
