@@ -34,8 +34,22 @@ router.get('/users', function (req, res) {
   });
 
   router.get('/users/:id', function (req, res) {
-
-    console.log(req.params.id);
+    let checker = 0;
+    console.log(users.length);
+    for(let i=0; i < users.length; i++){
+      if (users[i].id==req.params.id){
+        checker = 1;
+        res.render('users', {
+          users:users[i]
+        });
+      }
+    }
+    
+    if(checker==0){
+      res.render('users', {
+        alert:"Não foi encontrado nenhum user com o ID "+req.params.id+"!"
+      });
+    }
   });
 
 router.get('/livros', function(req, res) {

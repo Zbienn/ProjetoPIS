@@ -19,6 +19,7 @@
                 </tr>
         {{/users}}
         </table>
+        {{alert}}
 
     </body>
 </html>
@@ -29,7 +30,7 @@
         if (id==""){
             alert("Campo de pesquisa tem de ter um valor!");
         }else{
-             location.replace("http://localhost:8081/pesquisauser/"+id)
+             location.replace("http://localhost:8081/users/"+id)
         }
     }
 </script>
