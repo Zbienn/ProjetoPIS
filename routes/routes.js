@@ -33,6 +33,11 @@ router.get('/users', function (req, res) {
     });
   });
 
+  router.get('/users/:id', function (req, res) {
+
+    console.log(req.params.id);
+  });
+
 router.get('/livros', function(req, res) {
   res.render('livros', {
     livros: livros
@@ -48,7 +53,7 @@ router.get('/livros', function(req, res) {
   });
 
   router.post('/inseriruser', function (req, res) {
-    const user = {id: 0, user: "", password: "", admin: false};
+    let user = {id: 0, user: "", password: "", admin: false};
     user.id = parseInt(req.body.id);
     user.user = req.body.user;
     user.password = req.body.pass;
