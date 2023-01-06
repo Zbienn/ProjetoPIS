@@ -53,9 +53,32 @@ router.get('/users', function (req, res) {
   });
 
 router.get('/livros', function(req, res) {
+ 
   res.render('livros', {
-    livros: livros
-  });
+    livros: livros,
+    tabela: true
+    });
+});
+
+router.get('/livros/:id', function (req, res) {
+  let checker = 0;
+  
+  for(let i=0; i < livros.length; i++){
+    if (livros[i].id==req.params.id){
+      checker = 1;
+      res.render('livros', {
+        livros: livros[i],
+        tabela: true
+      });
+    }
+  }
+  
+  if(checker==0){
+    res.render('livros', {
+      tabela: false,
+      alert:"Não foi encontrado nenhum livro com o ID "+req.params.id+"!"
+    });
+  }
 });
 
   router.get('/inseriruserform', function (req, res) {
