@@ -81,6 +81,31 @@ router.get('/livros/:id', function (req, res) {
   }
 });
 
+router.delete('/livrosEliminar/:id', function (req, res) {
+  let checker = 0;
+  let removerID;  //Irá guardar a posição do array com o id correspondente a eliminar
+  for(let i=0; i < livros.length; i++) {
+    if (livros[i].id==req.params.id){
+      removerID = i;
+      checker = 1;
+      
+    }
+  }
+
+  if(checker == 1) {
+    livros.splice(removerID, 1);
+    res.render('livros', {
+      tabela:false,
+      alert: "Livro com o ID "+req.params.id+" removido!!"
+    });
+  } else {
+    res.render('livros', {
+      tabela:false,
+      alert:"Não foi encontrado nenhum livro com o ID "+req.params.id+"!"
+    });
+  }
+});
+
   router.get('/inseriruserform', function (req, res) {
     res.render('inseriruserform');
   });

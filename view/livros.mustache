@@ -48,5 +48,16 @@
                  location.replace("http://localhost:8081/livros/"+id)
             }
         }
+
+        function eliminar() {
+            var id = document.getElementById("idEliminar").value;
+            if (id==""){
+                alert("Campo de pesquisa tem de ter um valor!");
+            }else{
+                 location.replace("http://localhost:8081/livrosEliminar/"+id)
+            }
+        }
+
+        
     </script>
 </html>
