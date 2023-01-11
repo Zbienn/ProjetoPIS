@@ -2,6 +2,14 @@ var express = require('express');
 var mustacheExpress = require('mustache-express');
 var app = express();
 var router = express.Router();
+var mysql = require('mysql');
+var connectionOptions = {
+host: "localhost",
+user: "root",
+password: "",
+database: "PIS-Labs"
+};
+var connection = mysql.createConnection(connectionOptions);
 
 //Dados Json
 var users = require('../users.json');
@@ -28,9 +36,18 @@ router.get('/erro', function (req, res) {
 });
 
 router.get('/users', function (req, res) {
-    res.render('users', {
-      users:users
-    });
+  connection.connect();
+  connection.query("SELECT * FROM users", function (err, rows, fields) {
+  if (err)
+  console.log(err);
+  else
+  console.log(rows);
+  res.render('users', {
+    users:rows
+  });
+  });
+  connection.end();
+    
   });
 
   router.get('/users/:id', function (req, res) {
