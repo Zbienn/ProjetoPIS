@@ -52,6 +52,15 @@ router.get('/users', function (req, res) {
     }
   });
 
+
+  router.delete('/users', function (req, res) {
+    let removerID = req.body.id;
+    console.log(removerID)
+    
+  });
+
+  
+
 router.get('/livros', function(req, res) {
  
   res.render('livros', {
@@ -146,9 +155,7 @@ router.delete('/livrosEliminar/:id', function (req, res) {
 
 });
 
-router.get('*', function(req, res){
-    res.redirect('http://localhost:8081/erro');
-});
+
 
 
 

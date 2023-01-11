@@ -5,6 +5,7 @@ var mustacheExpress = require('mustache-express');
 app.engine('mustache', mustacheExpress());
 app.set('view engine', 'mustache');
 app.set('views', __dirname + '/view'); //definição de uma pasta 'public'
+app.use(express.static(__dirname + '/view'));
 app.use(express.urlencoded({extended: true}));
 
 var rotas = require('./routes/routes.js');
