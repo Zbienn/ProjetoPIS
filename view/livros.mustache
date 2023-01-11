@@ -1,0 +1,63 @@
+<html>
+    <head>
+    </head>
+    <body>
+        <h1>Livros</h1>
+        <br><br>
+        <a href="inserirLivroform">Inserir livro</a>   
+        <br><br>
+        <label for="idpesquisa">Pesquisa por id:</label>
+        <input type="number" id="idpesquisa" name="idpesquisa"><button type="button" onclick="pesquisar()">Pesquisar</button><br>
+        <label for="idEliminar">Eliminar por id:</label>
+        <input type="number" id="idEliminar" name="idEliminar"><button type="button" onclick="eliminar()">Remover</button>
+        <br><br>
+        <button onclick="hellow()" type="button">Pesquisar</button>
+        <br>
+        <img src="images/teste.jpg">
+
+        
+
+        <table align="center" style="text-align: center;">
+                {{#tabela}}
+                <tr style="background-color: black; color: white;"> <td> Id </td> <td> ISBN </td> <td> Titulo </td> <td> Número de Páginas </td> <td> Stock </td> <td> Id Editora </td> </tr>
+  
+                {{/tabela}}
+
+            {{#livros}}
+                    
+
+                    <tr>
+                        <td>{{id}}</td>
+                        <td>{{isbn}}</td>
+                        <td>{{tituloLivro}}</td>
+                        <td>{{numeroPaginas}}</td>
+                        <td>{{stock}}</td>
+                        <td>{{idEditora}}</td>
+                    </tr>
+            {{/livros}}
+            <center><b>{{alert}}</b></center>
+        </table>
+    </body>
+
+    <script>
+        function pesquisar() {
+            var id = document.getElementById("idpesquisa").value;
+            if (id==""){
+                alert("Campo de pesquisa tem de ter um valor!");
+            }else{
+                 location.replace("http://localhost:8081/livros/"+id)
+            }
+        }
+
+        function eliminar() {
+            var id = document.getElementById("idEliminar").value;
+            if (id==""){
+                alert("Campo de pesquisa tem de ter um valor!");
+            }else{
+                 location.replace("http://localhost:8081/livrosEliminar/"+id)
+            }
+        }
+
+        
+    </script>
+</html>

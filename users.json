@@ -1,0 +1,20 @@
+[
+    {
+        "id": 1,
+        "user": "admin",
+        "password": "123asd",
+        "admin": true
+    },
+    {
+        "id": 2,
+        "user": "leo",
+        "password": "lz123",
+        "admin": false
+    },
+    {
+        "id": 3,
+        "user": "gui",
+        "password": "gp890",
+        "admin": false
+    }
+]

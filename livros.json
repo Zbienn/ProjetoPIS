@@ -1,0 +1,26 @@
+[
+    {
+        "id": 1,
+        "isbn": "213456772",
+        "tituloLivro": "Os mistérios",
+        "numeroPaginas": 310,
+        "stock": 12,
+        "idEditora": 2
+    },
+    {
+        "id": 2,
+        "isbn": "22572914",
+        "tituloLivro": "Tecnologia e o seu Desenvolvimento",
+        "numeroPaginas": 512,
+        "stock": 5,
+        "idEditora": 1
+    },
+    {
+        "id": 3,
+        "isbn": "47562314",
+        "tituloLivro": "Planetas",
+        "numeroPaginas": 178,
+        "stock": 40,
+        "idEditora": 1
+    }
+]
