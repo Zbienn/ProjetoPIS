@@ -11,8 +11,6 @@ database: "biblioteca"
 };
 var connection = mysql.createConnection(connectionOptions);
 connection.connect();
-//Neste momento parece que não está a dar para obter o id para eliminar no lado do servidor apesar de já funcionar o console.log no lado do cliente.
-//Inicio da conexão à base de dados original
 
 //Dados Json
 var users = require('../users.json');
@@ -65,28 +63,9 @@ router.get('/users', function (req, res) {
   console.log(rows);
   res.render('users', {
     tabela:true,
-    users:rows,
-    CheckTeste: false
+    users:rows
   });
   });
-  //connection.end();
-    
-
-   /* console.log(users.length);
-    for(let i=0; i < users.length; i++){
-      if (users[i].id==req.params.id){
-        checker = 1;
-        res.render('users', {
-          users:users[i]
-        });
-      }
-    }
-    
-    if(checker==0){
-      res.render('users', {
-        alert:"Não foi encontrado nenhum user com o ID "+req.params.id+"!"
-      });
-    }*/
   });
 
 

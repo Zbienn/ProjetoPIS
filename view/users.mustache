@@ -3,14 +3,11 @@
 
    
 
-
-</script>
-
     </head>
     <body>
         <h1>USERS</h1>
         <br><br>
-        <a href="inseriruserform">Inserir user</a>   
+        <a href="http://localhost:8081/inseriruserform">Inserir user</a>   
         <br><br>
         <label for="idpesquisa">Pesquisa por id:</label><br>
         <input type="number" id="idpesquisa" name="idpesquisa"><button type="button" onclick="pesquisar()">Pesquisar</button>
@@ -31,8 +28,6 @@
                     <td>{{telemovel}}</td>
                     <td>{{optionalTel}}</td>
                     <td>{{administrador}}</td>
-                    
-                    <td><input type="checkbox" checked=false disabled  ></td>
                     <td> <button onclick="eliminar({{idconta}});"><img width="20" height="20" src="images/delete.png"></button>  </td>
                 </tr>
         {{/users}}
