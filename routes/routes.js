@@ -7,9 +7,12 @@ var connectionOptions = {
 host: "localhost",
 user: "root",
 password: "",
-database: "PIS-Labs"
+database: "biblioteca"
 };
 var connection = mysql.createConnection(connectionOptions);
+connection.connect();
+//Neste momento parece que não está a dar para obter o id para eliminar no lado do servidor apesar de já funcionar o console.log no lado do cliente.
+//Inicio da conexão à base de dados original
 
 //Dados Json
 var users = require('../users.json');
@@ -36,23 +39,40 @@ router.get('/erro', function (req, res) {
 });
 
 router.get('/users', function (req, res) {
-  connection.connect();
-  connection.query("SELECT * FROM users", function (err, rows, fields) {
+  
+  connection.query("SELECT * FROM conta", function (err, rows, fields) {
   if (err)
   console.log(err);
   else
   console.log(rows);
   res.render('users', {
+    tabela:true,
     users:rows
   });
   });
-  connection.end();
+  //connection.end();
     
   });
 
   router.get('/users/:id', function (req, res) {
     let checker = 0;
-    console.log(users.length);
+
+    //connection.connect();
+  connection.query("SELECT * FROM conta where `idconta`="+req.params.id, function (err, rows, fields) {
+  if (err)
+  console.log(err);
+  else
+  console.log(rows);
+  res.render('users', {
+    tabela:true,
+    users:rows,
+    CheckTeste: false
+  });
+  });
+  //connection.end();
+    
+
+   /* console.log(users.length);
     for(let i=0; i < users.length; i++){
       if (users[i].id==req.params.id){
         checker = 1;
@@ -66,13 +86,14 @@ router.get('/users', function (req, res) {
       res.render('users', {
         alert:"Não foi encontrado nenhum user com o ID "+req.params.id+"!"
       });
-    }
+    }*/
   });
 
 
   router.delete('/users', function (req, res) {
     let removerID = req.body.id;
-    console.log(removerID)
+    console.log(removerID);
+    console.log(req.body.id);
     
   });
 

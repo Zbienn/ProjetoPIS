@@ -17,14 +17,23 @@
         <br>
         <input type="number" id="idelimina" name="idelimina"><button type="button" onclick="eliminar()">Eliminar</button>
         <br><br>
-        <table>
+        <table align="center" style="text-align: center;">
+            {{#tabela}}
+                <tr style="background-color: black; color: white;"> <td> Id </td> <td> Nome </td> <td> Email </td> <td> Telemovel </td> <td> Telemovel (secundário) </td> <td> Administrador </td> </tr>
+  
+            {{/tabela}}
+
         {{#users}}
                 <tr>
-                    <td>{{id}}</td>
-                    <td>{{user}}</td>
-                    <td>{{password}}</td>
-                    <td>{{admin}}</td>
-                    <td> <button onclick="eliminar({{id}});">Tigre</button>  </td>
+                    <td>{{idconta}}</td>
+                    <td>{{nomeConta}}</td>
+                    <td>{{emailConta}}</td>
+                    <td>{{telemovel}}</td>
+                    <td>{{optionalTel}}</td>
+                    <td>{{administrador}}</td>
+                    
+                    <td><input type="checkbox" checked=false disabled  ></td>
+                    <td> <button onclick="eliminar({{idconta}});"><img width="20" height="20" src="images/delete.png"></button>  </td>
                 </tr>
         {{/users}}
         </table>
@@ -47,9 +56,10 @@
     }
 
     function eliminar(id) {
+        console.log(id);
         var xhttp = new XMLHttpRequest();
         xhttp.open("DELETE", "http://localhost:8081/users/", true);
-        xhttp.setRequestHeader(“Content-type", “application/json“);
+        xhttp.setRequestHeader("Content-type", "");
         xhttp.send(JSON.stringify({"id":id}));
     }
 </script>
