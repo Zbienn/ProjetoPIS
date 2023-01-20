@@ -1,0 +1,2 @@
+insert into conta (nomeConta, emailConta, senha, telemovel, optionalTel, administrador) values ("Guilherme", 'gui@gmail.com', "adm321", '901234567', '211234568', 1); 
+insert into conta (nomeConta, emailConta, senha, telemovel, optionalTel, administrador) values ("Leonardo", 'leo@gmail.com', "adm123", '972354651', '211234568', 1); 
