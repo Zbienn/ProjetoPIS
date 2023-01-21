@@ -82,6 +82,10 @@ router.delete('/users/:id', function (req, res) {
     
   });
 
+  router.get('/inseriruserform', function (req, res) {
+    res.render('inseriruserform');
+  });
+
   router.post('/users', function(req, res){
   
     var response = {
@@ -172,24 +176,13 @@ router.delete('/livrosEliminar/:id', function (req, res) {
   }
 });
 
-  router.get('/inseriruserform', function (req, res) {
-    res.render('inseriruserform');
-  });
+
 
   router.get('/inserirLivroform', function (req, res) {
     res.render('inserirLivroform');
   });
 
-  router.post('/inseriruser', function (req, res) {
-    let user = {id: 0, user: "", password: "", admin: false};
-    user.id = parseInt(req.body.id);
-    user.user = req.body.user;
-    user.password = req.body.pass;
-    users.push(user);
-    console.log(users)
-    res.redirect('http://localhost:8081');
-
- });
+  
 
  router.post('/inserirlivro', function (req, res) {
   const livro = {id: 0, isbn: "", titulo: "", numeroPaginas: 0, stock: 0, idEditora: 0};
