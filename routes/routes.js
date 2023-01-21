@@ -1,6 +1,7 @@
 var express = require('express');
 var mustacheExpress = require('mustache-express');
 var app = express();
+var bodyParser = require('body-parser');
 var router = express.Router();
 var mysql = require('mysql');
 var connectionOptions = {
@@ -16,8 +17,8 @@ connection.connect();
 var users = require('../users.json');
 var livros = require('../livros.json');
 
-app.engine('mustache', mustacheExpress());
-app.set('view engine', 'mustache'); //Extensão dos ficheiros das views
+//app.engine('mustache', mustacheExpress());
+//app.set('view engine', 'mustache'); //Extensão dos ficheiros das views
 app.set('views', __dirname + '/view'); 
 
 //Rotas
@@ -108,15 +109,25 @@ router.delete('/users/:id', function (req, res) {
 
 router.get('/updateuser/:id', function(req,res){
   let updateid = req.params.id;
- // connection.query("INSERT INTO `conta` (`nomeConta`, `emailConta`, `senha`, `telemovel`, `administrador`) VALUES ('"+req.body.user+"', '"+req.body.email+"', '"+req.body.pass+"', "+parseInt(req.body.number)+", 0)", function (err, rows, fields) {
- //   if (err)
- //   console.log(err);
- //   else
- //   res.redirect("http://localhost:8081/users");
+  connection.query("SELECT * FROM conta where `idconta`="+req.params.id, function (err, rows, fields) {
+    if (err)
+    console.log(err);
+    else
+    res.render('updateuser', {
+      id:rows[0].idconta,
+      user:rows[0].nomeConta,
+      pass:rows[0].senha,
+      email:rows[0].emailConta,
+      number:rows[0].telemovel
+    });
 
-  //}); 
-  res.render('updateuser');
+  }); 
 
+});
+
+
+router.put('/users', function(req,res){
+  console.log(req.body);  
 });
 
 

@@ -6,27 +6,41 @@
 </head>
 <body>
 
-    <form action="/users" method="post">
         
-        <input hidden readonly type="number" id="id" name="name">
+        <input hidden readonly type="number" id="id" name="name" value="{{id}}">
        
         <label for="user">Username:</label>
-        <input required type="text" id="user" name="user"><br><br>
+        <input required type="text" id="user" name="user" value="{{user}}"><br><br>
         
         <label for="pass">password:</label>
-        <input required type="text" id="pass" name="pass"><br><br>
+        <input required type="text" id="pass" name="pass" value="{{pass}}"><br><br>
         
         <label for="email">E-mail:</label>
-        <input required type="text" id="email" name="email"><br><br>
+        <input required type="text" id="email" name="email" value="{{email}}"><br><br>
 
         <label for="number">Telemovel:</label>
-        <input required type="number" id="number" name="number"><br><br>
+        <input required type="number" id="number" name="number" value="{{number}}"><br><br>
         
-        <input type="submit" value="Submit">
-    </form>
+        <button onclick="update()">Submeter</button>
 
 
 
 
 </body>
 </html>
+
+<script>
+    function update() {
+        let id = document.getElementById("id").value;
+        let user = document.getElementById("user").value;
+        let pass = document.getElementById("pass").value;
+        let email = document.getElementById("email").value;
+        let number = document.getElementById("number").value;
+        var obj = JSON.stringify({ "id":id, "user": user, "pass": pass, "email": email, "number":number });
+        var xhttp = new XMLHttpRequest();
+        xhttp.open("PUT", "http://localhost:8081/users", true);
+        xhttp.setRequestHeader("Content-type", "application/json");
+        xhttp.send(obj);
+        //window.location.reload(true);
+    }
+</script>
