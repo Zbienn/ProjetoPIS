@@ -69,7 +69,7 @@ router.get('/users/:id', function (req, res) {
 });
 
 
-  router.delete('/users/:id', function (req, res) {
+router.delete('/users/:id', function (req, res) {
     let removerID = req.params.id;
     connection.query("DELETE FROM conta where idconta="+req.params.id, function (err, rows, fields) {
       if (err)
@@ -100,11 +100,20 @@ router.get('/users/:id', function (req, res) {
     res.redirect("http://localhost:8081/users");
 
   });
+});
 
- 
-  });
+router.get('/updateuser/:id', function(req,res){
+  let updateid = req.params.id;
+ // connection.query("INSERT INTO `conta` (`nomeConta`, `emailConta`, `senha`, `telemovel`, `administrador`) VALUES ('"+req.body.user+"', '"+req.body.email+"', '"+req.body.pass+"', "+parseInt(req.body.number)+", 0)", function (err, rows, fields) {
+ //   if (err)
+ //   console.log(err);
+ //   else
+ //   res.redirect("http://localhost:8081/users");
 
-  
+  //}); 
+  res.render('updateuser');
+
+});
 
 
 
