@@ -20,11 +20,11 @@
         <label for="idpesquisa">Pesquisa por id:</label><br>
         <input type="number" id="idpesquisa" name="idpesquisa"><button type="button" onclick="pesquisar()">Pesquisar</button>
         <br>
-        <input type="number" id="idelimina" name="idelimina"><button type="button" onclick="eliminar()">Eliminar</button>
+       
         <br><br>
         <table align="center" style="text-align: center;" class="table">
             {{#tabela}}
-                <tr style="background-color: black; color: white;"> <td> Id </td> <td> Nome </td> <td> Email </td> <td> Telemovel </td> <td> Administrador </td> <td> ELIMINAR</td></tr>
+                <tr style="background-color: black; color: white;"> <td> Id </td> <td> Nome </td> <td> Email </td> <td> Telemovel </td> <td> Administrador </td> <td> ELIMINAR</td><td> ALTERAR</td></tr>
   
             {{/tabela}}
 
@@ -36,6 +36,7 @@
                     <td>{{telemovel}}</td>
                     <td>{{administrador}}</td>
                     <td> <button onclick="eliminar({{idconta}});"><img width="20" height="20" src="images/delete.png"></button>  </td>
+                    <td> <button href="http://localhost:8081/alteraruser/{{idconta}}"><img width="20" height="20" src="images/update.png"></button>  </td>
                 </tr>
         {{/users}}
         </table>
