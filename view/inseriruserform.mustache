@@ -6,13 +6,21 @@
 </head>
 <body>
 
-    <form action="/inseriruser" method="post">
-        <label for="id">Numero:</label>
-        <input type="number" id="id" name="id"><br><br>
+    <form action="/users" method="post">
+        
+       
         <label for="user">Username:</label>
-        <input type="text" id="user" name="user"><br><br>
+        <input required type="text" id="user" name="user"><br><br>
+        
         <label for="pass">password:</label>
-        <input type="text" id="pass" name="pass"><br><br>
+        <input required type="text" id="pass" name="pass"><br><br>
+        
+        <label for="email">E-mail:</label>
+        <input required type="text" id="email" name="email"><br><br>
+
+        <label for="number">Telemovel:</label>
+        <input required type="number" id="number" name="number"><br><br>
+        
         <input type="submit" value="Submit">
     </form>
 

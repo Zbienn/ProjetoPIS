@@ -36,6 +36,8 @@ router.get('/erro', function (req, res) {
 
 });
 
+//------------------USERS------------------------------------------------------
+
 router.get('/users', function (req, res) {
   
   connection.query("SELECT * FROM conta", function (err, rows, fields) {
@@ -49,9 +51,9 @@ router.get('/users', function (req, res) {
   });
   //connection.end();
     
-  });
+});
 
-  router.get('/users/:id', function (req, res) {
+router.get('/users/:id', function (req, res) {
     let checker = 0;
 
     //connection.connect();
@@ -64,7 +66,7 @@ router.get('/users', function (req, res) {
     users:rows
   });
   });
-  });
+});
 
 
   router.delete('/users/:id', function (req, res) {
@@ -80,8 +82,33 @@ router.get('/users', function (req, res) {
     
   });
 
+  router.post('/users', function(req, res){
+  
+    var response = {
+      user:req.body.user, 
+      email:req.body.email,
+      pass:req.body.pass,
+      number:req.body.number,
+    };
+
+  console.log(response);
+
+  connection.query("INSERT INTO `conta` (`nomeConta`, `emailConta`, `senha`, `telemovel`, `administrador`) VALUES ('"+req.body.user+"', '"+req.body.email+"', '"+req.body.pass+"', '"+parseInt(req.body.number)+"', 0)", function (err, rows, fields) {
+    if (err)
+    console.log(err);
+    else
+    res.redirect("http://localhost:8081/users");
+
+  });
+
+ 
+  });
+
   
 
+
+
+//------------------LIVROS------------------------------------------------------  
 router.get('/livros', function(req, res) {
  
   res.render('livros', {
