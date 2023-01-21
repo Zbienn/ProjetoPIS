@@ -93,7 +93,7 @@ router.get('/users/:id', function (req, res) {
 
   console.log(response);
 
-  connection.query("INSERT INTO `conta` (`nomeConta`, `emailConta`, `senha`, `telemovel`, `administrador`) VALUES ('"+req.body.user+"', '"+req.body.email+"', '"+req.body.pass+"', '"+parseInt(req.body.number)+"', 0)", function (err, rows, fields) {
+  connection.query("INSERT INTO `conta` (`nomeConta`, `emailConta`, `senha`, `telemovel`, `administrador`) VALUES ('"+req.body.user+"', '"+req.body.email+"', '"+req.body.pass+"', "+parseInt(req.body.number)+", 0)", function (err, rows, fields) {
     if (err)
     console.log(err);
     else
