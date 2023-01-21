@@ -5,10 +5,9 @@ USE biblioteca;
 
 CREATE TABLE conta(idconta int PRIMARY KEY AUTO_INCREMENT, 
 nomeConta varchar(50) not null unique,
-emailConta varchar(100) not null unique,
+emailConta varchar(100) not null ,
 senha varchar(50) not null,
-telemovel varchar(9) not null unique,
-optionalTel varchar(9),
+telemovel varchar(9) not null ,
 administrador boolean );
 
 CREATE TABLE autor(idAutor int PRIMARY KEY AUTO_INCREMENT, 
