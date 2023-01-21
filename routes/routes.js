@@ -42,7 +42,6 @@ router.get('/users', function (req, res) {
   if (err)
   console.log(err);
   else
-  console.log(rows);
   res.render('users', {
     tabela:true,
     users:rows
@@ -60,7 +59,6 @@ router.get('/users', function (req, res) {
   if (err)
   console.log(err);
   else
-  console.log(rows);
   res.render('users', {
     tabela:true,
     users:rows
@@ -69,10 +67,16 @@ router.get('/users', function (req, res) {
   });
 
 
-  router.delete('/users', function (req, res) {
-    let removerID = req.body.id;
-    console.log(removerID);
-    console.log(req.body.id);
+  router.delete('/users/:id', function (req, res) {
+    let removerID = req.params.id;
+    connection.query("DELETE FROM conta where idconta="+req.params.id, function (err, rows, fields) {
+      if (err)
+      console.log(err);
+      else
+      res.sendStatus(200);
+      //req.method ="GET";
+      //res.redirect(303,"http://localhost:8081/users");
+    });
     
   });
 
