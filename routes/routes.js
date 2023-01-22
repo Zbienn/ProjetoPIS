@@ -149,7 +149,8 @@ router.put('/users', function(req,res){
 //------------------LIVROS------------------------------------------------------  
 router.get('/livros', function(req, res) {
  
-  connection.query("SELECT * FROM editora inner join (livro INNER JOIN (livroautor INNER JOIN autor ON livroautor.idAutor = autor.idAutor) ON livroautor.idLivro = livro.idLivro) ON editora.idEditora = livro.idEditora", function (err, rows, fields) {
+  //connection.query("SELECT * FROM editora inner join (livro INNER JOIN (livroautor INNER JOIN autor ON livroautor.idAutor = autor.idAutor) ON livroautor.idLivro = livro.idLivro) ON editora.idEditora = livro.idEditora", function (err, rows, fields) {
+  connection.query("SELECT * FROM editora inner join livro ON editora.idEditora = livro.idEditora", function (err, rows, fields) {
     if (err)
     console.log(err);
     else
@@ -175,6 +176,28 @@ router.get('/livros/:id', function (req, res) {
   });
   });
 });
+
+  router.post('/livros', function(req, res){
+    
+      var response = {
+        isbn: req.body.isbn,
+        nomeLivro:req.body.titulo, 
+        descricao:req.body.descricao,
+        numeroPaginas:req.body.numeroPaginas,
+        stock:req.body.stock,
+        idEditora: req.body.idEditora
+      };
+
+    console.log(response);
+
+    connection.query("INSERT INTO `livro` (`isbn`, `tituloLivro`, `descricao`, `numeroPaginas`, `stock`, `idEditora`) VALUES ('"+req.body.isbn+"', '"+req.body.titulo+"', '"+req.body.descricao+"', "+parseInt(req.body.numeroPaginas)+", "+parseInt(req.body.stock)+", "+parseInt(req.body.idEditora)+")", function (err, rows, fields) {
+      if (err)
+      console.log(err);
+      else
+      res.redirect("http://localhost:8081/livros");
+
+    });
+  });
 
 router.delete('/livrosEliminar/:id', function (req, res) {
   let checker = 0;

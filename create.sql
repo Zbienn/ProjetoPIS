@@ -27,8 +27,8 @@ tituloLivro varchar(40) not null,
 descricao varchar(300),
 numeroPaginas int not null,
 stock int not null,
-preco float not null,
-idEditora int not null unique,
+preco float,
+idEditora int not null,
 FOREIGN KEY(idEditora) REFERENCES editora(idEditora));
 
 CREATE TABLE livroCategoria(idLivro int not null,
