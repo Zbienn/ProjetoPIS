@@ -39,8 +39,8 @@
         var obj = JSON.stringify({ "id":id, "user": user, "pass": pass, "email": email, "number":number });
         var xhttp = new XMLHttpRequest();
         xhttp.open("PUT", "http://localhost:8081/users", true);
-        xhttp.setRequestHeader("Content-type", "application/json");
-        xhttp.send(obj);
-        //window.location.reload(true);
+        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhttp.send("id="+id+ "&user="+user+ "&pass="+pass+ "&email="+email+ "&number="+number );
+        window.location.replace("http://localhost:8081/users");
     }
 </script>

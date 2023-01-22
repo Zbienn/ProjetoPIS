@@ -37,6 +37,11 @@ router.get('/erro', function (req, res) {
 
 });
 
+//-------------------------LOGIN------------------------------------------------
+
+
+
+
 //------------------USERS------------------------------------------------------
 
 router.get('/users', function (req, res) {
@@ -128,6 +133,15 @@ router.get('/updateuser/:id', function(req,res){
 
 router.put('/users', function(req,res){
   console.log(req.body);  
+  connection.query("UPDATE conta SET nomeConta='"+req.body.user +"', emailConta='"+req.body.email+"', senha='"+req.body.pass+"',  telemovel='"+req.body.number+"' WHERE idconta ='"+req.body.id+"'", function (err, rows, fields) {
+    if (err)
+    console.log(err);
+    else
+    res.sendStatus(200);
+
+  });
+
+  
 });
 
 

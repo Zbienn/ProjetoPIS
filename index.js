@@ -1,6 +1,7 @@
 var express = require('express');
 var app = express();
 var mustacheExpress = require('mustache-express');
+var jwt = require('jsonwebtoken');
 
 app.engine('mustache', mustacheExpress());
 app.set('view engine', 'mustache');
