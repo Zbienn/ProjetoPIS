@@ -9,13 +9,22 @@
         
         
         <meta charset="utf-8">
-        <link rel="stylesheet" href="css/paginascss.css">
+        <link rel="stylesheet" type="text/css" href="http://localhost:8081/css/paginascss.css" />
 
 
+        <style>
+            body{
+                background-image: url('images/background2.jpg');
+                background-repeat: no-repeat;
+                background-attachment: fixed;
+                background-size: cover;
+            }
+        </style>
     </head>
     <body>
+        <br>
         <h1>USERS</h1>
-        <br><br>
+        <br>
        <!-- <a href="http://localhost:8081/inseriruserform">Inserir user</a>-->   
         
     <!--     MENU    -->
@@ -38,10 +47,10 @@
                     <a class="nav-link" href="http://localhost:8081/users">Listar Todos</a>
                   </li>
               </ul>
-              <form class="form-inline my-2 my-lg-0">
+              <!--<form class="form-inline my-2 my-lg-0">
                 <input class="form-control mr-sm-2" type="search" placeholder="Pesquisar" id="idpesquisa" aria-label="Pesquisar">
             <button class="btn btn-outline-success my-2 my-sm-0" type="button" onclick="pesquisar()">Pesquisar</button>
-              </form>
+              </form>-->
             </div>
          
         </nav>
@@ -54,12 +63,9 @@
             <input class="form-control mr-sm-2" type="search" placeholder="Pesquisar" id="idpesquisa" aria-label="Pesquisar">
             <button class="btn btn-outline-success my-2 my-sm-0" type="button" onclick="pesquisar()">Pesquisar</button>
           </form>
-        <a href="http://localhost:8081/users">Listar Todos</a>
-        <br>
-        <button class="btn btn-outline-success my-2 my-sm-0" onclick="history.back()">Voltar</button>
         <br><br>
 
-        
+
         <table align="center" style="text-align: center;" class="table">
             {{#tabela}}
                 <tr style="background-color: black; color: white;"> <td> Id </td> <td> Nome </td> <td> Email </td> <td> Telemovel </td> <td> Administrador </td> <td> ELIMINAR</td><td> ALTERAR</td></tr>
