@@ -17,8 +17,6 @@
         <br><br>
         <label for="idpesquisa">Pesquisa por id:</label>
         <input type="number" id="idpesquisa" name="idpesquisa"><button type="button" onclick="pesquisar()">Pesquisar<img width="10" height="10" src="images/search.png"></button><br>
-        <label for="idEliminar">Eliminar por id:</label>
-        <input type="number" id="idEliminar" name="idEliminar"><button type="button" onclick="eliminar()"> Eliminar </button>
         <br><br>
         <br>
        
@@ -27,7 +25,7 @@
 
         <table align="center" style="text-align: center;" class="table">
                 {{#tabela}}
-                <tr style="background-color: black; color: white;"> <td> Id </td> <td> ISBN </td> <td> Titulo </td> <td> Número de Páginas </td> <td> Stock </td> <td> Id Editora </td> </tr>
+                <tr style="background-color: black; color: white;"> <td> Id </td> <td> ISBN </td> <td> Titulo </td> <td> Número de Páginas </td> <td> Stock </td> <td>Autor</td><td> Editora </td> <td> ELIMINAR</td><td> ALTERAR</td> </tr>
   
                 {{/tabela}}
 
@@ -35,12 +33,15 @@
                     
 
                     <tr>
-                        <td>{{id}}</td>
+                        <td>{{idLivro}}</td>
                         <td>{{isbn}}</td>
                         <td>{{tituloLivro}}</td>
                         <td>{{numeroPaginas}}</td>
                         <td>{{stock}}</td>
-                        <td>{{idEditora}}</td>
+                        <td>{{nomeAutor}}</td>
+                        <td>{{nomeEditora}}</td>
+                        <td> <button onclick="eliminar({{idLivro}});"><img width="20" height="20" src="http://localhost:8081/images/delete.png"></button>  </td>
+                        <td> <a href="http://localhost:8081/updatelivro/{{idLivro}}"><button><img width="20" height="20" src="http://localhost:8081/images/update.png"></button></a>  </td>
                     </tr>
             {{/livros}}
             <center><b>{{alert}}</b></center>
@@ -57,7 +58,7 @@
             }
         }
 
-        function eliminar() {
+        function eliminar(id) {
             var id = document.getElementById("idEliminar").value;
             if (id==""){
                 alert("Campo de pesquisa tem de ter um valor!");
