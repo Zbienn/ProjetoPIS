@@ -39,7 +39,26 @@ router.get('/erro', function (req, res) {
 
 //-------------------------LOGIN------------------------------------------------
 
+router.post('/login', (req,res,next) => {
+  console.log(req.body);
+  connection.query("SELECT * FROM conta where `nomeConta`="+req.body.username, function (err, rows, fields) {
+    if (err)
+      console.log(err);
+    else
+      if(req.body.psw == rows[0].senha){
+        const data = {
+            userid:row[0].idconta,
+            admin:row[0].administrador
+        }
+        const token = jwt.sign(data, 'PIS',{
+          expiresIn:300
+        });
+        return res.json({ auth:true, token: token});
 
+      }
+  });
+  res.status(500).json({message: 'Invalid Login.'});
+});
 
 
 //------------------USERS------------------------------------------------------
