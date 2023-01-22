@@ -190,6 +190,7 @@ router.get('/livros/:id', function (req, res) {
 
     console.log(response);
 
+
     connection.query("INSERT INTO `livro` (`isbn`, `tituloLivro`, `descricao`, `numeroPaginas`, `stock`, `idEditora`) VALUES ('"+req.body.isbn+"', '"+req.body.titulo+"', '"+req.body.descricao+"', "+parseInt(req.body.numeroPaginas)+", "+parseInt(req.body.stock)+", "+parseInt(req.body.idEditora)+")", function (err, rows, fields) {
       if (err) {
         console.log(err);
@@ -218,29 +219,68 @@ router.delete('/livros/:id', function (req, res) {
 });
 
 
+router.get('/updateLivro/:id', function(req,res){
+  let updateId = req.params.id;
+  connection.query("SELECT * FROM livro where `idLivro`="+req.params.id, function (err, rows, fields) {
+    if (err)
+    console.log(err);
+    else
+    res.render('updateLivro', {
+      id:rows[0].idLivro,
+      isbn:rows[0].isbn,
+      titulo:rows[0].tituloLivro,
+      descricao:rows[0].descricao,
+      numeroPaginas:rows[0].numeroPaginas,
+      stock:rows[0].stock,
+      idEditora:rows[0].idEditora
+    });
 
-  router.get('/inserirLivroform', function (req, res) {
-    res.render('inserirLivroform');
-  });
+  }); 
 
-  
-
- router.post('/inserirlivro', function (req, res) {
-  const livro = {id: 0, isbn: "", titulo: "", numeroPaginas: 0, stock: 0, idEditora: 0};
-  livro.id = parseInt(req.body.id);
-  livro.isbn = req.body.isbn;
-  livro.titulo = req.body.titulo;
-  livro.tituloLivro = req.body.titulo;
-  livro.numeroPaginas = req.body.numeroPaginas;
-  livro.stock = req.body.stock;
-  livro.idEditora = parseInt(req.body.idEditora);
-  livros.push(livro);
-  console.log(livros);
-  res.render('home', {
-  });
 });
 
 
+  router.get('/inserirLivroform', function (req, res) {
+    /*connection.query("SELECT * FROM editora"), function (err, rows, fields) { 
+      if (err) {
+        console.log(err);
+        res.render('livros', {
+          tabela:false,
+          alert: "Editora Erro!!"
+        });
+      }
+      else {
+        res.render('inserirLivroform', {
+          tabela:true,
+          editoras: rows
+        });
+      }
+
+  }*/
+    res.render('inserirLivroform');
+    
+  });
+
+  router.put('/livros', function(req,res){
+    console.log(req.body);  
+    connection.query("UPDATE livro SET isbn='"+req.body.isbn +"', tituloLivro='"+req.body.titulo+"', descricao='"+req.body.descricao+"',  numeroPaginas='"+req.body.numeroPaginas+"',  stock='"+req.body.stock+"',  idEditora='"+req.body.idEditora+"' WHERE idLivro ='"+req.body.id+"'", function (err, rows, fields) {
+      if (err) {
+        console.log(err);
+        res.render('livros', {
+          tabela:false,
+          alert: "Livro não Atualizado!!"
+        });
+      }
+      else
+      res.sendStatus(200);
+  
+    });
+  
+    
+  });
+
+
+//Login ------------------------------
  router.get('/login', function (req, res) {
     res.render('login');
 

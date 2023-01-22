@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Update - Livro</title>
+    <link rel="stylesheet" href="css/default.css">
+</head>
+<body>
+
+        
+        <input hidden readonly type="number" id="id" name="name" value="{{id}}">
+       
+        <label for="isbn">ISBN:</label>
+        <input required type="text" id="isbn" name="ibsn" value="{{isbn}}"><br><br>
+        
+        <label for="titulo">Título:</label>
+        <input required type="text" id="titulo" name="titulo" value="{{titulo}}"><br><br>
+        
+        <label for="descricao">Descrição:</label>
+        <input required type="text" id="descricao" name="descricao" value="{{descricao}}"><br><br>
+
+        <label for="numeroPaginas">Número de Páginas:</label>
+        <input required type="number" id="numeroPaginas" name="numeroPaginas" value="{{numeroPaginas}}"><br><br>
+        
+        <label for="stock">Stock:</label>
+        <input required type="number" id="stock" name="stock" value="{{stock}}"><br><br>
+        
+        <label for="idEditora">Id Editora:</label>
+        <input required type="number" id="idEditora" name="idEditora" value="{{idEditora}}"><br><br>
+        <button onclick="update()">Submeter</button>
+
+
+
+
+</body>
+</html>
+
+<script>
+    function update() {
+        let id = document.getElementById("id").value;
+        let isbn = document.getElementById("isbn").value;
+        let titulo = document.getElementById("titulo").value;
+        let descricao = document.getElementById("descricao").value;
+        let numeroPaginas = document.getElementById("numeroPaginas").value;
+        let stock = document.getElementById("stock").value;
+        let idEditora = document.getElementById("idEditora").value;
+        //var obj = JSON.stringify({ "id":id, "user": user, "pass": pass, "email": email, "number":number });
+        var xhttp = new XMLHttpRequest();
+        xhttp.open("PUT", "http://localhost:8081/livros", true);
+        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhttp.send("id="+id+ "&isbn="+isbn+ "&titulo="+titulo+ "&descricao="+descricao+ "&numeroPaginas="+numeroPaginas + "&stock="+stock+ "&idEditora="+idEditora );
+        window.location.replace("http://localhost:8081/livros");
+    }
+</script>

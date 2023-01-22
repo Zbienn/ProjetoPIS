@@ -8,18 +8,34 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
         
         <meta charset="utf-8">
+        <link rel="stylesheet" href="css/paginascss.css">
+
         
     </head>
     <body>
         <h1>Livros</h1>
         <br><br>
+        <!--<nav class="navbar navbar-dark bg-dark">
+           
+        </nav>-->
+       
+            
+          
+        
+
         <a href="inserirLivroform">Inserir livro</a>   
         <br><br>
-        <label for="idpesquisa">Pesquisa por id:</label><br>
+        <form class="form-inline">
+            <input class="form-control mr-sm-2" type="search" placeholder="Pesquisar" id="idpesquisa" aria-label="Pesquisar">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="button" onclick="pesquisar()">Pesquisar</button>
+          </form>
+        <!--<label for="idpesquisa">Pesquisa por id:</label><br>
         <input type="number" id="idpesquisa" name="idpesquisa"><button type="button" onclick="pesquisar()">Pesquisar<img width="10" height="10" src="images/search.png"></button><br>
-        
+        -->
         <a href="http://localhost:8081/livros">Listar Todos</a>
-        <br><br><br>
+        <br>
+        <button class="btn btn-outline-success my-2 my-sm-0" onclick="history.back()">Voltar</button>
+        <br><br>
        
 
         
@@ -40,8 +56,8 @@
                         <td>{{numeroPaginas}}</td>
                         <td>{{stock}}</td>
                         <td>{{nomeEditora}}</td>
-                        <td> <button onclick="eliminar({{idLivro}});"><img width="20" height="20" src="http://localhost:8081/images/delete.png"></button>  </td>
-                        <td> <a href="http://localhost:8081/updatelivro/{{idLivro}}"><button><img width="20" height="20" src="http://localhost:8081/images/update.png"></button></a>  </td>
+                        <td> <button class="btn btn-outline-success my-2 my-sm-0" onclick="eliminar({{idLivro}});"><img width="20" height="20" src="http://localhost:8081/images/delete.png"></button>  </td>
+                        <td> <a href="http://localhost:8081/updateLivro/{{idLivro}}"><button class="btn btn-outline-success my-2 my-sm-0"><img width="20" height="20" src="http://localhost:8081/images/update.png"></button></a>  </td>
                     </tr>
             {{/livros}}
             <center><b>{{alert}}</b></center>
