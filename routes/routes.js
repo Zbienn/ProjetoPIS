@@ -191,37 +191,30 @@ router.get('/livros/:id', function (req, res) {
     console.log(response);
 
     connection.query("INSERT INTO `livro` (`isbn`, `tituloLivro`, `descricao`, `numeroPaginas`, `stock`, `idEditora`) VALUES ('"+req.body.isbn+"', '"+req.body.titulo+"', '"+req.body.descricao+"', "+parseInt(req.body.numeroPaginas)+", "+parseInt(req.body.stock)+", "+parseInt(req.body.idEditora)+")", function (err, rows, fields) {
-      if (err)
-      console.log(err);
+      if (err) {
+        console.log(err);
+        res.render('livros', {
+          tabela:false,
+          alert: "Livro não inserido!!"
+        });
+      }
       else
       res.redirect("http://localhost:8081/livros");
 
     });
   });
 
-router.delete('/livrosEliminar/:id', function (req, res) {
-  let checker = 0;
-  let removerID;  //Irá guardar a posição do array com o id correspondente a eliminar
-  for(let i=0; i < livros.length; i++) {
-    if (livros[i].id==req.params.id){
-      removerID = i;
-      checker = 1;
-      
-    }
-  }
-
-  if(checker == 1) {
-    livros.splice(removerID, 1);
-    res.render('livros', {
-      tabela:false,
-      alert: "Livro com o ID "+req.params.id+" removido!!"
-    });
-  } else {
-    res.render('livros', {
-      tabela:false,
-      alert:"Não foi encontrado nenhum livro com o ID "+req.params.id+"!"
-    });
-  }
+router.delete('/livros/:id', function (req, res) {
+  let removerID = req.params.id;
+  connection.query("DELETE FROM livro where idLivro="+req.params.id, function (err, rows, fields) {
+    if (err)
+    console.log(err);
+    else
+    res.sendStatus(200);
+    //req.method ="GET";
+    //res.redirect(303,"http://localhost:8081/users");
+  });
+  
 });
 
 
