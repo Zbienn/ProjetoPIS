@@ -2,6 +2,9 @@ var express = require('express');
 var app = express();
 var mustacheExpress = require('mustache-express');
 var jwt = require('jsonwebtoken');
+const cookieParser = require("cookie-parser");
+
+app.use(cookieParser());
 
 app.engine('mustache', mustacheExpress());
 app.set('view engine', 'mustache');

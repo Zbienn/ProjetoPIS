@@ -22,7 +22,6 @@
     <body>
         <br><br>
         <div id="logreg-forms" class="center">  
-            <form action="/login" method="post" >
                 <h1 class="h3 mb-3 font-weight-normal" style="text-align: center"> <b>Biblioteca</b></h1>
 
                 <div class="social-login">
@@ -32,12 +31,24 @@
                 <input type="text" id="inputUser" class="form-control" placeholder="Username" name="username" required="" autofocus=""><br>
                 <input type="password"  id="inputPassword" class="form-control" placeholder="Password"  name="psw" required="">
                 <br><br>
-                <input class="btn btn-success btn-block" type="submit" value="Submit"><i class="fas fa-sign-in-alt"></i>
-            </form>
-    
+                <button class="btn btn-success btn-block" onclick="login()"><i class="fas fa-sign-in-alt">Submit</button></i>
                 
-        </div>
-
-        
+        </div>   
     </body>
+
+    <script>
+        function login() {
+            let user = document.getElementById("inputUser").value;
+            let pass = document.getElementById("inputPassword").value;
+            var xhttp = new XMLHttpRequest();
+            xhttp.open("POST", "http://localhost:8081/login", true);
+
+            xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xhttp.send("user="+user+ "&pass="+pass);
+
+            //window.location.replace("http://localhost:8081/");
+
+        }
+    </script>
+
 </html>

@@ -2,6 +2,7 @@ var express = require('express');
 var mustacheExpress = require('mustache-express');
 var app = express();
 var bodyParser = require('body-parser');
+const cookieParser = require("cookie-parser");
 var router = express.Router();
 var mysql = require('mysql');
 var connectionOptions = {
@@ -17,15 +18,25 @@ connection.connect();
 var users = require('../users.json');
 var livros = require('../livros.json');
 
+
+
 //app.engine('mustache', mustacheExpress());
 //app.set('view engine', 'mustache'); //Extensão dos ficheiros das views
 app.set('views', __dirname + '/view'); 
+
+app.use(cookieParser());
 
 //Rotas
 router.get('/', function(req, res) {
   res.render('home', {
   });
 });
+
+/*router.get('/home', verifyJWT, function(req, res) {
+  res.render('home', {
+
+  });
+})*/
 
 router.get('/ola', function (req, res) {
     res.send('ola');
@@ -39,9 +50,9 @@ router.get('/erro', function (req, res) {
 
 //-------------------------LOGIN------------------------------------------------
 
-/* router.post('/login', (req,res,next) => {
+ router.post('/login', (req,res,next) => {
   console.log(req.body);
-  connection.query("SELECT * FROM conta where `nomeConta`="+req.body.username, function (err, rows, fields) {
+  connection.query("SELECT * FROM conta where nomeConta='"+req.body.user+"'", function (err, rows, fields) {
     if (err)
       console.log(err);
     else
@@ -53,17 +64,43 @@ router.get('/erro', function (req, res) {
         const token = jwt.sign(data, 'PIS',{
           expiresIn:300
         });
-        return res.json({ auth:true, token: token});
+
+        res.cookie("access_token", "teste");
+        res.status(200).end()
+        /*
+        const tokenString = token
+        return res.cookie("access_token", token, {
+          httpOnly: true
+        }); */
+        // res.json({ auth:true, token: token});
 
       }
   });
   res.status(500).json({message: 'Invalid Login.'});
-}); */
+});
+
+//Cookies erro de core
+
+function verifyJWT(req, res, next){
+  const token = req.headers['x-access-token'];
+  if (!token) 
+    return res.status(401).json({ auth: false, message: 'No token provided.' });
+  
+  jwt.verify(token, 'PIS', function(err, decoded) {
+    if (err) 
+      return res.status(500).json({ auth: false, message: 'Failed to authenticate token.' });
+  
+    // se tudo estiver ok, salva no request para uso posterior
+    req.userAdmin = decoded.data.admin;
+    next();
+  });
+}
+ 
 
 
 //------------------USERS------------------------------------------------------
 
-router.get('/users', function (req, res) {
+router.get('/users', verifyJWT, function (req, res) {
   
   connection.query("SELECT * FROM conta", function (err, rows, fields) {
   if (err)
@@ -300,7 +337,7 @@ router.get('/updateLivro/:id', function(req,res){
 
 
 //Login ------------------------------
- router.get('/login', function (req, res) {
+ router.get('/loginform', function (req, res) {
     res.render('login');
 
 });
