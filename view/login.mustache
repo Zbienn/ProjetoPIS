@@ -44,9 +44,10 @@
             xhttp.open("POST", "http://localhost:8081/login", true);
 
             xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-            xhttp.send("user="+user+ "&pass="+pass);
+            xhttp.send("user="+user+ "&pass="+pass) ;
 
-            //window.location.replace("http://localhost:8081/");
+                        
+            window.location.replace("http://localhost:8081/");
 
         }
     </script>

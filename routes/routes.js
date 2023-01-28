@@ -23,20 +23,15 @@ app.use(cookieParser());
 
 //Rotas
 router.get('/', function(req, res) {
-  res.render('home', {
+  res.render('login', {
   });
 });
 
-/*router.get('/home', verifyJWT, function(req, res) {
+router.get('/home', verifyJWT, function(req, res) {
   res.render('home', {
 
   });
-})*/
-
-router.get('/ola', function (req, res) {
-    res.send('ola');
-
-});
+})
 
 router.get('/erro', function (req, res) {
     res.render('erro');
@@ -65,6 +60,7 @@ router.get('/erro', function (req, res) {
 
         res.cookie("access_token", token);
         res.status(200).json({ auth: true, data: data });
+        
       }
       else res.status(500).json({message: 'Invalid Login.'});
     }
@@ -90,6 +86,7 @@ function verifyJWT(req, res, next){
   
     // se tudo estiver ok, salva no request para uso posterior
     req.userAdmin = decoded.admin;
+    req.userid = decoded.userid;
     next();
   });
 }
@@ -99,7 +96,7 @@ function verifyJWT(req, res, next){
 //------------------USERS------------------------------------------------------
 
 router.get('/users',verifyJWT, function (req, res) {
-  
+  console.log(req.userid);
   connection.query("SELECT * FROM conta", function (err, rows, fields) {
   if (err)
   console.log(err);
@@ -115,8 +112,8 @@ router.get('/users',verifyJWT, function (req, res) {
 
 
 router.get('/usersClientes',verifyJWT, function (req, res) {
-  
-  connection.query("SELECT * FROM conta ", function (err, rows, fields) {
+  console.log(req.userid);
+  connection.query("SELECT * FROM conta where idconta = "+ req.userid, function (err, rows, fields) {
   if (err)
   console.log(err);
   else
@@ -204,6 +201,24 @@ router.get('/updateuser/:id', function(req,res){
     console.log(err);
     else
     res.render('updateuser', {
+      id:rows[0].idconta,
+      user:rows[0].nomeConta,
+      pass:rows[0].senha,
+      email:rows[0].emailConta,
+      number:rows[0].telemovel
+    });
+
+  }); 
+
+});
+
+router.get('/updateuserClientes/:id', function(req,res){
+  let updateid = req.params.id;
+  connection.query("SELECT * FROM conta where `idconta`="+req.params.id, function (err, rows, fields) {
+    if (err)
+    console.log(err);
+    else
+    res.render('updateuserClientes', {
       id:rows[0].idconta,
       user:rows[0].nomeConta,
       pass:rows[0].senha,
