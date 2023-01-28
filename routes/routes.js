@@ -59,6 +59,7 @@ router.get('/erro', function (req, res) {
       res.status(500).json({message: 'Invalid Login.'});
     }
     else {
+      try{
       if(req.body.pass == rows[0].senha){
         const data = {
           userid: rows[0].idconta,
@@ -73,13 +74,19 @@ router.get('/erro', function (req, res) {
       }
       else res.status(500).json({message: 'Invalid Login.'});
     }
+    catch{
+      res.status(500).json({message: 'Invalid Login.'});
+    }
+
+    }
   });
 });
 
 //Cookies erro de core
 
 function verifyJWT(req, res, next){
-  const token = req.cookie;
+  const token = req.cookies.access_token;
+ 
   if (!token) 
     return res.status(401).json({ auth: false, message: 'No token provided.' });
   
@@ -88,7 +95,7 @@ function verifyJWT(req, res, next){
       return res.status(500).json({ auth: false, message: 'Failed to authenticate token.' });
   
     // se tudo estiver ok, salva no request para uso posterior
-    req.userAdmin = decoded.data.admin;
+    req.userAdmin = decoded.admin;
     next();
   });
 }
@@ -97,7 +104,7 @@ function verifyJWT(req, res, next){
 
 //------------------USERS------------------------------------------------------
 
-router.get('/users', function (req, res) {
+router.get('/users',verifyJWT, function (req, res) {
   
   connection.query("SELECT * FROM conta", function (err, rows, fields) {
   if (err)
