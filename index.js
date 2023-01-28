@@ -1,7 +1,6 @@
 var express = require('express');
 var app = express();
 var mustacheExpress = require('mustache-express');
-var jwt = require('jsonwebtoken');
 const cookieParser = require("cookie-parser");
 
 app.use(cookieParser());
@@ -16,5 +15,3 @@ var rotas = require('./routes/routes.js');
 
 app.use('/', rotas);
 app.listen(8081);
-
-

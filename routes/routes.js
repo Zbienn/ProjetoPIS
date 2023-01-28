@@ -1,6 +1,7 @@
 var express = require('express');
 var mustacheExpress = require('mustache-express');
 var app = express();
+var jwt = require('jsonwebtoken');
 var bodyParser = require('body-parser');
 const cookieParser = require("cookie-parser");
 var router = express.Router();
@@ -53,36 +54,32 @@ router.get('/erro', function (req, res) {
  router.post('/login', (req,res,next) => {
   console.log(req.body);
   connection.query("SELECT * FROM conta where nomeConta='"+req.body.user+"'", function (err, rows, fields) {
-    if (err)
+    if (err) {
       console.log(err);
-    else
-      if(req.body.psw == rows[0].senha){
+      res.status(500).json({message: 'Invalid Login.'});
+    }
+    else {
+      if(req.body.pass == rows[0].senha){
         const data = {
-            userid:row[0].idconta,
-            admin:row[0].administrador
+          userid: rows[0].idconta,
+          admin: rows[0].administrador
         }
         const token = jwt.sign(data, 'PIS',{
           expiresIn:300
         });
 
-        res.cookie("access_token", "teste");
-        res.status(200).end()
-        /*
-        const tokenString = token
-        return res.cookie("access_token", token, {
-          httpOnly: true
-        }); */
-        // res.json({ auth:true, token: token});
-
+        res.cookie("access_token", token);
+        res.status(200).json({ auth: true, data: data });
       }
+      else res.status(500).json({message: 'Invalid Login.'});
+    }
   });
-  res.status(500).json({message: 'Invalid Login.'});
 });
 
 //Cookies erro de core
 
 function verifyJWT(req, res, next){
-  const token = req.headers['x-access-token'];
+  const token = req.cookie;
   if (!token) 
     return res.status(401).json({ auth: false, message: 'No token provided.' });
   
@@ -100,7 +97,7 @@ function verifyJWT(req, res, next){
 
 //------------------USERS------------------------------------------------------
 
-router.get('/users', verifyJWT, function (req, res) {
+router.get('/users', function (req, res) {
   
   connection.query("SELECT * FROM conta", function (err, rows, fields) {
   if (err)
