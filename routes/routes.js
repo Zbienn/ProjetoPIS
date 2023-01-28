@@ -27,10 +27,17 @@ router.get('/', function(req, res) {
   });
 });
 
-router.get('/home', verifyJWT, function(req, res) {
-  res.render('home', {
 
-  });
+
+router.get('/home', verifyJWT, function(req, res) {
+  if(req.userAdmin == 1) {
+    res.render('home', {
+
+    });
+  } else {
+    res.redirect(303, 'localhost:8081/livrosClientes');
+  }
+  
 })
 
 router.get('/erro', function (req, res) {
@@ -71,6 +78,14 @@ router.get('/erro', function (req, res) {
     }
   });
 });
+
+router.get("/redirect/:admin", function (req, res) {
+      if(req.params.admin == "1") {
+        res.redirect("localhost:8081/home");
+      } else {
+        res.redirect("localhost:8081/livrosClientes");
+      }
+}) 
 
 //Cookies erro de core
 
@@ -245,6 +260,21 @@ router.put('/users', function(req,res){
 });
 
 
+router.put('/usersClientes', function(req,res){
+  console.log(req.body);  
+  connection.query("UPDATE conta SET nomeConta='"+req.body.user +"', emailConta='"+req.body.email+"', senha='"+req.body.pass+"',  telemovel='"+req.body.number+"' WHERE idconta ='"+req.body.id+"'", function (err, rows, fields) {
+    if (err) {
+      console.log(err);
+    }
+    else {
+      res.clearCookie("access_token");
+      res.sendStatus(200);
+    }
+    
+  });
+
+  
+});
 
 //------------------LIVROS------------------------------------------------------  
 router.get('/livros', verifyJWT, function(req, res) {
