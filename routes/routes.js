@@ -15,12 +15,6 @@ database: "biblioteca"
 var connection = mysql.createConnection(connectionOptions);
 connection.connect();
 
-//Dados Json
-var users = require('../users.json');
-var livros = require('../livros.json');
-
-
-
 //app.engine('mustache', mustacheExpress());
 //app.set('view engine', 'mustache'); //Extensão dos ficheiros das views
 app.set('views', __dirname + '/view'); 
@@ -122,7 +116,7 @@ router.get('/users',verifyJWT, function (req, res) {
 
 router.get('/usersClientes',verifyJWT, function (req, res) {
   
-  connection.query("SELECT * FROM conta", function (err, rows, fields) {
+  connection.query("SELECT * FROM conta ", function (err, rows, fields) {
   if (err)
   console.log(err);
   else
@@ -238,7 +232,7 @@ router.put('/users', function(req,res){
 
 
 //------------------LIVROS------------------------------------------------------  
-router.get('/livros', function(req, res) {
+router.get('/livros', verifyJWT, function(req, res) {
  
   //connection.query("SELECT * FROM editora inner join (livro INNER JOIN (livroautor INNER JOIN autor ON livroautor.idAutor = autor.idAutor) ON livroautor.idLivro = livro.idLivro) ON editora.idEditora = livro.idEditora", function (err, rows, fields) {
   connection.query("SELECT * FROM editora inner join livro ON editora.idEditora = livro.idEditora", function (err, rows, fields) {
