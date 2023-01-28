@@ -119,6 +119,22 @@ router.get('/users',verifyJWT, function (req, res) {
     
 });
 
+
+router.get('/usersClientes',verifyJWT, function (req, res) {
+  
+  connection.query("SELECT * FROM conta", function (err, rows, fields) {
+  if (err)
+  console.log(err);
+  else
+  res.render('usersClientes', {
+    tabela:true,
+    users:rows
+  });
+  });
+  //connection.end();
+    
+});
+
 router.get('/users/:id', function (req, res) {
     let checker = 0;
 
@@ -132,6 +148,21 @@ router.get('/users/:id', function (req, res) {
     users:rows
   });
   });
+});
+
+router.get('/usersClientes/:id', function (req, res) {
+  let checker = 0;
+
+  //connection.connect();
+connection.query("SELECT * FROM conta where `idconta`="+req.params.id, function (err, rows, fields) {
+if (err)
+console.log(err);
+else
+res.render('usersClientes', {
+  tabela:true,
+  users:rows
+});
+});
 });
 
 
