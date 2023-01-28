@@ -35,7 +35,9 @@ router.get('/home', verifyJWT, function(req, res) {
 
     });
   } else {
-    res.redirect(303, 'localhost:8081/livrosClientes');
+    res.render('homeC', {
+      
+    });
   }
   
 })
