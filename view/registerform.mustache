@@ -1,0 +1,62 @@
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="http://localhost:8081/css/mainstyle.css" />
+        <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+      
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        
+        <meta charset="utf-8">
+        
+       
+        <style>
+            body{
+                background-image: url('images/backgroundf.gif');
+                background-repeat: no-repeat;
+                 background-attachment: fixed;
+                 background-size: cover;
+            }
+        </style>
+    </head>
+    <body>
+        <br><br>
+        <div id="logreg-forms" class="center">  
+                <h1 class="h3 mb-3 font-weight-normal" style="text-align: center"> <b>Biblioteca</b></h1>
+                <br><h2 class="h3 mb-3 font-weight-normal" style="text-align: center"> <b>Register</b><h2>
+
+                <div class="social-login">
+                   
+                </div>
+                <p style="text-align:center">   </p>
+                <input type="text" id="inputUser" class="form-control" placeholder="Username" name="username" required autofocus=""><br>
+                <input type="password"  id="inputPassword" class="form-control" placeholder="Password"  name="psw" required>
+                <br>
+                <input type="email"  id="inputEmail" class="form-control" placeholder="Email"  name="email" required>
+                <br>
+                <input type="text"  id="inputNumber" class="form-control" placeholder="Phone Number"  name="number" required>
+                <br>
+                <input value="Register" type="submit"  class="btn btn-success btn-block" onclick="register()"><i class="fas fa-sign-in-alt"></i>
+                <br>
+                <button class="btn btn-success btn-block" onclick="location.href='http://localhost:8081/loginform'"><i class="fas fa-sign-in-alt">Login</button></i>
+                
+        </div>   
+    </body>
+
+    <script>
+       function register() {
+        let user = document.getElementById("inputUser").value;
+        let pass = document.getElementById("inputPassword").value;
+        let email = document.getElementById("inputEmail").value;
+        let number = document.getElementById("inputNumber").value;
+        var obj = JSON.stringify({"user": user, "pass": pass, "email": email, "number":number });
+        var xhttp = new XMLHttpRequest();
+        xhttp.open("POST", "http://localhost:8081/users", true);
+        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhttp.send("user="+user+ "&pass="+pass+ "&email="+email+ "&number="+number );
+        alert('User registered successfully!')
+        window.location.replace("http://localhost:8081/");
+    }
+    </script>
+
+</html>

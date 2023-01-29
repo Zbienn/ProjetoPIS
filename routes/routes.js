@@ -47,6 +47,10 @@ router.get('/erro', function (req, res) {
 
 });
 
+router.get('/registerform', function(req, res){
+  res.render('registerform');
+});
+
 //-------------------------LOGIN------------------------------------------------
 
  router.post('/login', (req,res,next) => {
@@ -81,13 +85,6 @@ router.get('/erro', function (req, res) {
   });
 });
 
-router.get("/redirect/:admin", function (req, res) {
-      if(req.params.admin == "1") {
-        res.redirect("localhost:8081/home");
-      } else {
-        res.redirect("localhost:8081/livrosClientes");
-      }
-}) 
 
 //Cookies erro de core
 
@@ -113,16 +110,20 @@ function verifyJWT(req, res, next){
 //------------------USERS------------------------------------------------------
 
 router.get('/users',verifyJWT, function (req, res) {
-  console.log(req.userid);
-  connection.query("SELECT * FROM conta", function (err, rows, fields) {
-  if (err)
-  console.log(err);
-  else
-  res.render('users', {
-    tabela:true,
-    users:rows
-  });
-  });
+  if(req.userAdmin == 1){
+    console.log(req.userid);
+    connection.query("SELECT * FROM conta", function (err, rows, fields) {
+    if (err)
+    console.log(err);
+    else
+    res.render('users', {
+      tabela:true,
+      users:rows
+    });
+    });
+  }else{
+    res.redirect("http://localhost:8081/home");
+  }
   //connection.end();
     
 });
@@ -143,22 +144,24 @@ router.get('/usersClientes',verifyJWT, function (req, res) {
     
 });
 
-router.get('/users/:id', function (req, res) {
-    let checker = 0;
-
-    //connection.connect();
-  connection.query("SELECT * FROM conta where `idconta`="+req.params.id, function (err, rows, fields) {
-  if (err)
-  console.log(err);
-  else
-  res.render('users', {
-    tabela:true,
-    users:rows
-  });
-  });
+router.get('/users/:id', verifyJWT,function (req, res) {
+  if(req.userAdmin == 1){
+      //connection.connect();
+    connection.query("SELECT * FROM conta where `idconta`="+req.params.id, function (err, rows, fields) {
+    if (err)
+    console.log(err);
+    else
+    res.render('users', {
+      tabela:true,
+      users:rows
+    });
+    });
+  }else{
+    res.redirect("http://localhost:8081/home");
+  }
 });
 
-router.get('/usersClientes/:id', function (req, res) {
+router.get('/usersClientes/:id', verifyJWT,function (req, res) {
   let checker = 0;
 
   //connection.connect();
@@ -174,24 +177,32 @@ res.render('usersClientes', {
 });
 
 
-router.delete('/users/:id', function (req, res) {
-    let removerID = req.params.id;
-    connection.query("DELETE FROM conta where idconta="+req.params.id, function (err, rows, fields) {
-      if (err)
-      console.log(err);
-      else
-      res.sendStatus(200);
-      //req.method ="GET";
-      //res.redirect(303,"http://localhost:8081/users");
-    });
-    
+router.delete('/users/:id',verifyJWT, function (req, res) {
+  if(req.userAdmin == 1){
+      let removerID = req.params.id;
+      connection.query("DELETE FROM conta where idconta="+req.params.id, function (err, rows, fields) {
+        if (err)
+        console.log(err);
+        else
+        res.sendStatus(200);
+        //req.method ="GET";
+        //res.redirect(303,"http://localhost:8081/users");
+      });
+    }else{
+      res.redirect("http://localhost:8081/home");
+    }
   });
 
-  router.get('/inseriruserform', function (req, res) {
-    res.render('inseriruserform');
+  router.get('/inseriruserform',verifyJWT, function (req, res) {
+    if(req.userAdmin == 1){
+      res.render('inseriruserform');
+    }else{
+      res.redirect("http://localhost:8081/home");
+    }
   });
 
-  router.post('/users', function(req, res){
+  router.post('/users',verifyJWT, function(req, res){
+    if(req.userAdmin == 1){
   
     var response = {
       user:req.body.user, 
@@ -209,9 +220,23 @@ router.delete('/users/:id', function (req, res) {
     res.redirect("http://localhost:8081/users");
 
   });
+}else{
+  res.redirect("http://localhost:8081/home");
+}
 });
 
-router.get('/updateuser/:id', function(req,res){
+router.post('/register', function(req, res){
+  connection.query("INSERT INTO `conta` (`nomeConta`, `emailConta`, `senha`, `telemovel`, `administrador`) VALUES ('"+req.body.user+"', '"+req.body.email+"', '"+req.body.pass+"', "+parseInt(req.body.number)+", 0)", function (err, rows, fields) {
+    if (err)
+    console.log(err);
+    else
+    res.sendStatus(200);
+
+  });
+});
+
+router.get('/updateuser/:id',verifyJWT, function(req,res){
+  if(req.userAdmin == 1){
   let updateid = req.params.id;
   connection.query("SELECT * FROM conta where `idconta`="+req.params.id, function (err, rows, fields) {
     if (err)
@@ -226,10 +251,12 @@ router.get('/updateuser/:id', function(req,res){
     });
 
   }); 
-
+}else{
+  res.redirect("http://localhost:8081/home");
+}
 });
 
-router.get('/updateuserClientes/:id', function(req,res){
+router.get('/updateuserClientes/:id',verifyJWT, function(req,res){
   let updateid = req.params.id;
   connection.query("SELECT * FROM conta where `idconta`="+req.params.id, function (err, rows, fields) {
     if (err)
@@ -248,7 +275,8 @@ router.get('/updateuserClientes/:id', function(req,res){
 });
 
 
-router.put('/users', function(req,res){
+router.put('/users',verifyJWT, function(req,res){
+  if(req.userAdmin == 1){
   console.log(req.body);  
   connection.query("UPDATE conta SET nomeConta='"+req.body.user +"', emailConta='"+req.body.email+"', senha='"+req.body.pass+"',  telemovel='"+req.body.number+"' WHERE idconta ='"+req.body.id+"'", function (err, rows, fields) {
     if (err)
@@ -257,12 +285,14 @@ router.put('/users', function(req,res){
     res.sendStatus(200);
 
   });
-
+}else{
+  res.redirect("http://localhost:8081/home");
+}
   
 });
 
 
-router.put('/usersClientes', function(req,res){
+router.put('/usersClientes',verifyJWT, function(req,res){
   console.log(req.body);  
   connection.query("UPDATE conta SET nomeConta='"+req.body.user +"', emailConta='"+req.body.email+"', senha='"+req.body.pass+"',  telemovel='"+req.body.number+"' WHERE idconta ='"+req.body.id+"'", function (err, rows, fields) {
     if (err) {
@@ -280,6 +310,7 @@ router.put('/usersClientes', function(req,res){
 
 //------------------LIVROS------------------------------------------------------  
 router.get('/livros', verifyJWT, function(req, res) {
+  if(req.userAdmin == 1){
  
   //connection.query("SELECT * FROM editora inner join (livro INNER JOIN (livroautor INNER JOIN autor ON livroautor.idAutor = autor.idAutor) ON livroautor.idLivro = livro.idLivro) ON editora.idEditora = livro.idEditora", function (err, rows, fields) {
   connection.query("SELECT * FROM editora inner join livro ON editora.idEditora = livro.idEditora", function (err, rows, fields) {
@@ -291,10 +322,14 @@ router.get('/livros', verifyJWT, function(req, res) {
       livros:rows
     });
     });
-   
+  }else{
+    res.redirect("http://localhost:8081/home");
+  }
 });
 
-router.get('/livros/:id', function (req, res) {
+router.get('/livros/:id',verifyJWT, function (req, res) {
+  if(req.userAdmin == 1){
+ 
   let checker = 0;
 
     //connection.connect();
@@ -307,6 +342,9 @@ router.get('/livros/:id', function (req, res) {
     livros:rows
   });
   });
+}else{
+  res.redirect("http://localhost:8081/home");
+}
 });
 
 router.get('/livrosClientes/:id', function (req, res) {
@@ -339,7 +377,9 @@ router.get('/livrosClientes', function(req, res) {
    
 });
 
-  router.post('/livros', function(req, res){
+router.post('/livros',verifyJWT, function(req, res){
+  if(req.userAdmin == 1){
+ 
     
       var response = {
         isbn: req.body.isbn,
@@ -365,9 +405,13 @@ router.get('/livrosClientes', function(req, res) {
       res.redirect("http://localhost:8081/livros");
 
     });
-  });
+  }else{
+    res.redirect("http://localhost:8081/home");
+  }
+});
 
-router.delete('/livros/:id', function (req, res) {
+router.delete('/livros/:id',verifyJWT, function (req, res) {
+  if(req.userAdmin == 1){
   let removerID = req.params.id;
   connection.query("DELETE FROM livro where idLivro="+req.params.id, function (err, rows, fields) {
     if (err)
@@ -377,11 +421,14 @@ router.delete('/livros/:id', function (req, res) {
     //req.method ="GET";
     //res.redirect(303,"http://localhost:8081/users");
   });
-  
+}else{
+  res.redirect("http://localhost:8081/home");
+}
 });
 
 
-router.get('/updateLivro/:id', function(req,res){
+router.get('/updateLivro/:id',verifyJWT, function(req,res){
+  if(req.userAdmin == 1){
   let updateId = req.params.id;
   connection.query("SELECT * FROM livro where `idLivro`="+req.params.id, function (err, rows, fields) {
     if (err)
@@ -398,11 +445,14 @@ router.get('/updateLivro/:id', function(req,res){
     });
 
   }); 
-
+}else{
+  res.redirect("http://localhost:8081/home");
+}
 });
 
 
-  router.get('/inserirLivroform', function (req, res) {
+router.get('/inserirLivroform',verifyJWT, function (req, res) {
+  if(req.userAdmin == 1){
     /*connection.query("SELECT * FROM editora"), function (err, rows, fields) { 
       if (err) {
         console.log(err);
@@ -420,10 +470,13 @@ router.get('/updateLivro/:id', function(req,res){
 
   }*/
     res.render('inserirLivroform');
-    
-  });
+  }else{
+    res.redirect("http://localhost:8081/home");
+  }  
+});
 
-  router.put('/livros', function(req,res){
+router.put('/livros',verifyJWT, function(req,res){
+  if(req.userAdmin == 1){
     console.log(req.body);  
     connection.query("UPDATE livro SET isbn='"+req.body.isbn +"', tituloLivro='"+req.body.titulo+"', descricao='"+req.body.descricao+"',  numeroPaginas='"+req.body.numeroPaginas+"',  stock='"+req.body.stock+"',  idEditora='"+req.body.idEditora+"' WHERE idLivro ='"+req.body.id+"'", function (err, rows, fields) {
       if (err) {
@@ -437,9 +490,11 @@ router.get('/updateLivro/:id', function(req,res){
       res.sendStatus(200);
   
     });
-  
+  }else{
+    res.redirect("http://localhost:8081/home");
+  } 
     
-  });
+});
 
 
 //Login ------------------------------
