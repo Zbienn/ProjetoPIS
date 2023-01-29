@@ -1,5 +1,6 @@
 insert into conta (nomeConta, emailConta, senha, telemovel,administrador) values ("Guilherme", 'gui@gmail.com', "adm321", '901234567',  1); 
 insert into conta (nomeConta, emailConta, senha, telemovel, administrador) values ("Leonardo", 'leo@gmail.com', "adm123", '972354651',  1); 
+insert into conta (nomeConta, emailConta, senha, telemovel, administrador) values ("user123", 'user123@gmail.com', "user123", '972354651',  0); 
 
 insert into autor (nomeAutor) values ("Fernando Pessoa"); 
 insert into autor (nomeAutor) values ("José Saramago"); 
