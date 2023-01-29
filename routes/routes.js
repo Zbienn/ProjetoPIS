@@ -347,7 +347,7 @@ router.get('/livros/:id',verifyJWT, function (req, res) {
 }
 });
 
-router.get('/livrosClientes/:id', function (req, res) {
+router.get('/livrosClientes/:id',verifyJWT, function (req, res) {
   let checker = 0;
 
     //connection.connect();
@@ -362,7 +362,7 @@ router.get('/livrosClientes/:id', function (req, res) {
   });
 });
 
-router.get('/livrosClientes', function(req, res) {
+router.get('/livrosClientes',verifyJWT, function(req, res) {
  
   //connection.query("SELECT * FROM editora inner join (livro INNER JOIN (livroautor INNER JOIN autor ON livroautor.idAutor = autor.idAutor) ON livroautor.idLivro = livro.idLivro) ON editora.idEditora = livro.idEditora", function (err, rows, fields) {
   connection.query("SELECT * FROM editora inner join livro ON editora.idEditora = livro.idEditora", function (err, rows, fields) {
